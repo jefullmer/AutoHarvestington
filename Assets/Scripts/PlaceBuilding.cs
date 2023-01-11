@@ -47,6 +47,7 @@ public class PlaceBuilding : MonoBehaviour
 
     private void CheckCanPlace()
     {
+        int gridPieces = 0;
         for(int i = 0; i < inCollision.Count; i++)
         {
             if (inCollision[i].GetComponent<PlaceBuilding>())
@@ -55,8 +56,17 @@ public class PlaceBuilding : MonoBehaviour
                 sprite.color = oldColor + new Color(.35f, 0, 0);
                 return;
             }
-            
+            if (inCollision[i].GetComponent<GridScript>())
+                gridPieces++;
         }
+        
+        if (gridPieces != 4)
+        {
+            canPlace = false;
+            sprite.color = oldColor + new Color(.35f, 0, 0);
+            return;
+        }
+
         canPlace = true;
         sprite.color = oldColor;
     }
